@@ -33,4 +33,4 @@ yarn-error.log*
 *.sln
 
 # FirebaseConfig
-./fireconfig.js
+./firebaseconfig.js

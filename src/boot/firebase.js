@@ -3,7 +3,7 @@ import firebase from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import fireConfig from '../../fireconfig';
+import fireConfig from '../../firebaseconfig';
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 // export default boot(async (/* { app, router, ... } */) => {
