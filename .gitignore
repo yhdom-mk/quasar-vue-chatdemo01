@@ -32,4 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-/fireconfig.js
+./fireconfig.js
