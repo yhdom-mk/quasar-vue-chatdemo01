@@ -24,7 +24,7 @@
       <q-btn
         @click="submitForm"
         color="primary"
-        type:="submit"
+        type="submit"
         :label="tab" />
     </div>
   </q-form>
@@ -46,23 +46,15 @@ export default defineComponent({
     }
   },
   methods: {
-    // ...mapActions('registerStore', [
-    //   'registerUser'
-    // ]),
-    ...mapActions('module-store' ,['registerUser']),
+    ...mapActions('moduleStore' ,['registerUser']),
 
     submitForm() {
       if(this.tab == 'login') {
         console.log('login the user')
       }else {
-        this.registerUser()
+        this.registerUser(this.formData)
       }
     }
-  },
-  // computed: {
-  //    ...mapActions('registerStore', [
-  //     'registerUser'
-  //   ])
-  // }
+  }
 })
 </script>
