@@ -1,11 +1,12 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
-
 import moduleStore from './module-store'
 // import * as registerStore from "@/store/module-store.js"
-
 // import * as registerStore from './store/store.js'
 
+// import Vue from 'vue';
+// import Vuex from 'vuex';
+// Vue.use(Vuex)
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -18,7 +19,7 @@ import moduleStore from './module-store'
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      store,
+      // store,
       namespaced: true,
       moduleStore
     },
@@ -27,22 +28,21 @@ export default store(function (/* { ssrContext } */) {
     // for dev mode and --debug builds only
     strict: process.env.DEBUGGING
   })
-
   return Store
 })
+
+
 // export default function (/* { ssrContext } */) {
-//   const Store = createStore({
+//   const Store = new Vuex.Store({
 //     modules: {
 //       store,
 //       namespaced: true,
 //       moduleStore
 //     },
-
 //     // enable strict mode (adds overhead!)
 //     // for dev mode and --debug builds only
 //     strict: process.env.DEBUGGING
 //   })
-
 //   return Store
 // }
 
