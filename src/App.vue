@@ -4,8 +4,14 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { mapActions } from 'vuex'
 
 export default defineComponent({
-  name: 'App'
+  methods: {
+    ...mapActions('moduleStore', ['handleAuthStateChanged'])
+  },
+  mounted() {
+    this.handleAuthStateChanged()
+  }
 })
 </script>

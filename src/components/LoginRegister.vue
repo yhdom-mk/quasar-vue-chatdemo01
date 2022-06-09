@@ -46,12 +46,13 @@ export default defineComponent({
     }
   },
   methods: {
-    ...mapActions('moduleStore' ,['registerUser']),
+    ...mapActions('moduleStore' ,['registerUser', 'loginUser']),
 
     submitForm() {
       if(this.tab == 'login') {
-        console.log('login the user')
-      }else {
+        this.loginUser(this.formData)
+      }
+      else {
         this.registerUser(this.formData)
       }
     }
