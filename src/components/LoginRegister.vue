@@ -40,8 +40,8 @@ export default defineComponent({
     return {
       formData: {
         name: '',
-        email: '',
-        password: ''
+        email: 'nop@test.com',
+        password: '123nop'
       }
     }
   },

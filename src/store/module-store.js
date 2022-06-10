@@ -39,7 +39,10 @@ const actions = {
       console.log(error.message);
     })
   },
-  handleAuthStateChanged({ commit }){
+  logoutUser() {
+    firebaseAuth.signOut()
+  },
+  handleAuthStateChanged({ commit, dispatch, state }){
     console.log('handle login');
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
@@ -55,12 +58,30 @@ const actions = {
             userId: userId
           })
         })
+        dispatch('firebaseUpdateUser', {
+          userId: userId,
+          updates: {
+            online: true
+          }
+        })
+        this.$router.push('/')
       }
       else {
         //User is logged out.
+        dispatch('firebaseUpdateUser', {
+          userId: state.userDetails.userId,
+          updates: {
+            online: false
+          }
+        })
         commit('setUserDetails', {})
+        this.$router.replace('/auth')
       }
     });
+  },
+  firebaseUpdateUser({}, payload) {
+    firebaseDb.ref('users/' + payload.userId)
+      .update(payload.updates)
   }
 }
 const getters = {
