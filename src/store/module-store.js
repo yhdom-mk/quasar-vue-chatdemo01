@@ -1,11 +1,17 @@
+// import Vue from 'vue'
 import { firebaseAuth, firebaseDb } from "../boot/firebase"
 
 const state = {
-  userDetails: {}
+  userDetails: {},
+  users: {}
 }
 const mutations = {
   setUserDetails(state, payload) {
     state.userDetails = payload
+  },
+  addUser(state, payload) {
+    // console.log('payload', payload);
+    // Vue.set(state.users, payload.userId, payload.userDetails)
   }
 }
 const actions = {
@@ -64,6 +70,7 @@ const actions = {
             online: true
           }
         })
+        dispatch('firebaseGetUsers')
         this.$router.push('/')
       }
       else {
@@ -82,10 +89,22 @@ const actions = {
   firebaseUpdateUser({}, payload) {
     firebaseDb.ref('users/' + payload.userId)
       .update(payload.updates)
+  },
+  firebaseGetUsers({ commit }) {
+    firebaseDb.ref('users').on('child_added', snapshot => {
+      let userDetails = snapshot.val()
+      let userId = snapshot.key
+      commit('addUser', {
+        userDetails,
+        userId
+      })
+    })
   }
 }
 const getters = {
-
+  users: state => {
+    return state.users
+  }
 }
 export default {
   namespaced: true,
