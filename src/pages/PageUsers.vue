@@ -4,8 +4,7 @@
       class="full-width"
       separator>
       <q-item
-        v-for="user in users"
-        :key="user.id"
+        v-for="user in users" :key="user"
         to="/chat"
         clickable
         v-ripple>
@@ -37,7 +36,7 @@ import { mapGetters } from 'vuex'
 export default defineComponent({
   // data () {
     // return {
-      // users:
+    //   users
       // [ {
       //   id: 1,
       //   name: 'Jim',
@@ -55,7 +54,7 @@ export default defineComponent({
       //   name: 'Johnny',
       //   online: true
       // } ]
-    // }
+  //   }
   // },
   computed: {
     ...mapGetters('moduleStore', ['users'])

@@ -18,6 +18,7 @@ const mutations = {
     // state.users = payload.userDetails
     // state.users.userId = payload.userDetails
     state.users.push(...[payload.userDetails])
+    // console.log(state.users);
   }
 }
 
