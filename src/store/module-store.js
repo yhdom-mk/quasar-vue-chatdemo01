@@ -19,6 +19,7 @@ const mutations = {
     // state.users.userId = payload.userDetails
     state.users.push(...[payload.userDetails])
     // console.log(state.users);
+    console.log(state);
   }
 }
 
@@ -113,7 +114,14 @@ const actions = {
 
 const getters = {
   users: state => {
-    return state.users
+    let usersFiltered = {}
+    Object.keys(state.users).forEach(key => {
+      if(key !== state.userDetails.userId) {
+        usersFiltered[key] = state.users[key]
+      }
+    });
+    console.log(usersFiltered);
+    return usersFiltered
   }
 }
 
