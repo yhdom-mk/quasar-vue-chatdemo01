@@ -36,25 +36,27 @@ import { mapGetters } from 'vuex'
 
 export default defineComponent({
   // data () {
-  //   return {
-  //     users: [ {
-  //       id: 1,
-  //       name: 'Jim',
-  //       online: true
-  //     }, {
-  //       id: 2,
-  //       name: 'Blyan',
-  //       online: false
-  //     }, {
-  //       id: 3,
-  //       name: 'Lizy',
-  //       online: true
-  //     }, {
-  //       id: 4,
-  //       name: 'Johnny',
-  //       online: true
-  //     } ]
-  //   }
+    // return {
+      // users:
+      // [ {
+      //   id: 1,
+      //   name: 'Jim',
+      //   online: true
+      // }, {
+      //   id: 2,
+      //   name: 'Blyan',
+      //   online: false
+      // }, {
+      //   id: 3,
+      //   name: 'Lizy',
+      //   online: true
+      // }, {
+      //   id: 4,
+      //   name: 'Johnny',
+      //   online: true
+      // } ]
+    // }
+  // },
   computed: {
     ...mapGetters('moduleStore', ['users'])
   }

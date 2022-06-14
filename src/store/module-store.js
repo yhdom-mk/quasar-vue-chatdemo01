@@ -3,8 +3,9 @@ import { firebaseAuth, firebaseDb } from "../boot/firebase"
 
 const state = {
   userDetails: {},
-  users: {}
+  users: []
 }
+
 const mutations = {
   setUserDetails(state, payload) {
     state.userDetails = payload
@@ -12,8 +13,14 @@ const mutations = {
   addUser(state, payload) {
     // console.log('payload', payload);
     // Vue.set(state.users, payload.userId, payload.userDetails)
+
+    // state.users.userDetails = payload.userDetails
+    // state.users = payload.userDetails
+    // state.users.userId = payload.userDetails
+    state.users.push(...[payload.userDetails])
   }
 }
+
 const actions = {
   registerUser({}, payload) {
     console.log('payload:', payload);
@@ -94,6 +101,7 @@ const actions = {
     firebaseDb.ref('users').on('child_added', snapshot => {
       let userDetails = snapshot.val()
       let userId = snapshot.key
+      // console.log(userDetails, userId);
       commit('addUser', {
         userDetails,
         userId
@@ -101,11 +109,13 @@ const actions = {
     })
   }
 }
+
 const getters = {
   users: state => {
     return state.users
   }
 }
+
 export default {
   namespaced: true,
   state,
