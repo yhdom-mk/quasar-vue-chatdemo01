@@ -28,8 +28,11 @@ const mutations = {
     // state.users.push(...[payload.userId])
     state.users.push(...[payload])
     // state.users.push(...[JSON.parse(JSON.stringify(payload))])
-
     console.log(state.users);
+  },
+  updateUser(state, payload) {
+    Object.assign(state.users[userId],
+      payload.userDetails)
   }
 }
 
@@ -119,14 +122,23 @@ const actions = {
         userId
       })
     })
+    firebaseDb.ref('users').on('child_changed', snapshot => {
+      let userDetails = snapshot.val()
+      let userId = snapshot.key
+      // console.log(userDetails, userId);
+      commit('updateUser', {
+        userDetails,
+        userId
+      })
+    })
   }
 }
 
 const getters = {
   users: state => {
     let usersFiltered = {}
-    usersFiltered = state.users.filter(
-      (id) => id.userId !== state.userDetails.userId)
+    usersFiltered = state.users.filter((id) =>
+      id.userId !== state.userDetails.userId)
     // Object.keys(state.users).forEach(key => {
     //   if(key !== state.users.userId) {
     //     usersFiltered[key] = state.users[key]
