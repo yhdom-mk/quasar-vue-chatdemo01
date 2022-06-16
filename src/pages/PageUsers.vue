@@ -10,18 +10,18 @@
         v-ripple>
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white">
-            {{ user.name.charAt(0) }}
+            {{ user.userDetails.name.charAt(0) }}
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>{{ user.name }}</q-item-label>
+          <q-item-label>{{ user.userDetails.name }}</q-item-label>
         </q-item-section>
 
         <q-item-section side>
           <q-badge
             :color="user.online? 'purple-5' : 'blue-grey-3'">
-            {{ user.online? 'Online' : 'Offline' }}
+            {{ user.userDetails.online? 'Online' : 'Offline' }}
           </q-badge>
         </q-item-section>
       </q-item>

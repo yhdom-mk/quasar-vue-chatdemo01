@@ -4,6 +4,13 @@ import { firebaseAuth, firebaseDb } from "../boot/firebase"
 const state = {
   userDetails: {},
   users: []
+  
+  // usersPayloads: {
+  //   name: '',
+  //   email: '',
+  //   online: true,
+  //   userId: null
+  // },
 }
 
 const mutations = {
@@ -13,13 +20,16 @@ const mutations = {
   addUser(state, payload) {
     // console.log('payload', payload);
     // Vue.set(state.users, payload.userId, payload.userDetails)
-
     // state.users.userDetails = payload.userDetails
     // state.users = payload.userDetails
     // state.users.userId = payload.userDetails
-    state.users.push(...[payload.userDetails])
-    // console.log(state.users);
-    console.log(state);
+
+    // state.users.push(...[payload.userDetails])
+    // state.users.push(...[payload.userId])
+    state.users.push(...[payload])
+    // state.users.push(...[JSON.parse(JSON.stringify(payload))])
+
+    console.log(state.users);
   }
 }
 
@@ -115,11 +125,14 @@ const actions = {
 const getters = {
   users: state => {
     let usersFiltered = {}
-    Object.keys(state.users).forEach(key => {
-      if(key !== state.userDetails.userId) {
-        usersFiltered[key] = state.users[key]
-      }
-    });
+    usersFiltered = state.users.filter(
+      (id) => id.userId !== state.userDetails.userId)
+    // Object.keys(state.users).forEach(key => {
+    //   if(key !== state.users.userId) {
+    //     usersFiltered[key] = state.users[key]
+    //   }
+    // });
+    // console.log(Object.keys(state.users));
     console.log(usersFiltered);
     return usersFiltered
   }
