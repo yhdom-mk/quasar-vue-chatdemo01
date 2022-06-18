@@ -31,8 +31,16 @@ const mutations = {
     console.log(state.users);
   },
   updateUser(state, payload) {
-    Object.assign(state.users[userId],
-      payload.userDetails)
+    // Object.assign(state.users[userId],payload.userDetails)
+    Object.assign(state.users, payload.userDetails)
+    // console.log(payload.userDetails);
+
+    // let proxy_userDetails = new Proxy(payload, {
+    //   set(target,prop,value) {
+    //     target[prop] = value
+    //   }
+    // })
+    // console.log(proxy_userDetails);
   }
 }
 
