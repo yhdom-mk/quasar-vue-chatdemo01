@@ -32,15 +32,32 @@ const mutations = {
   },
   updateUser(state, payload) {
     // Object.assign(state.users[userId],payload.userDetails)
-    Object.assign(state.users, payload.userDetails)
+    // Object.assign(state.users, payload.userDetails)
     // console.log(payload.userDetails);
 
-    // let proxy_userDetails = new Proxy(payload, {
-    //   set(target,prop,value) {
-    //     target[prop] = value
-    //   }
-    // })
+    let filUsers = state.users.filter(el => {
+      return el.userId !== payload.userId
+    })
+    // console.log(filUsers);
+    state.users = filUsers
+
+    let proxy_userDetails = new Proxy(payload, {
+      set(target,prop,value) {
+        target[prop] = value
+        return true
+      }
+    })
     // console.log(proxy_userDetails);
+
+    let updateUsers = state.users.push(proxy_userDetails)
+    // console.log(updateUsers);
+    state.uses = updateUsers
+
+    // let payloadIndex = state.users.some( el => {
+    //   return el.userId == payload.userId 
+    // })
+    // console.log(payloadIndex);
+    // console.log(state.users);
   }
 }
 
