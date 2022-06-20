@@ -71,6 +71,9 @@ export default defineComponent({
         from: 'me'
       })
     }
+  },
+  mounted() {
+    console.log(this.$route.params.otherUserId);
   }
 })
 </script>
