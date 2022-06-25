@@ -12,7 +12,9 @@
           label="Back" />
 
         <q-toolbar-title class="absolute-center">
-          {{ $route.path }}
+          <div class="omit">
+            {{ this.$route.path }}
+          </div>
         </q-toolbar-title>
 
         <q-btn
