@@ -6,10 +6,10 @@
     <div class="q-pa-md column col justify-end">
       <q-chat-message
         v-for="message in messages"
-        :key="message.text"
-        :name="message.from"
-        :text="[message.text]"
-        :sent="message.from == 'me' ? true: false"
+        :key="message.messageDetails.text"
+        :name="message.messageDetails.from"
+        :text="[message.messageDetails.text]"
+        :sent="message.messageDetails.from == 'me' ? true: false"
       />
     </div>
     <q-footer elevated>
@@ -43,28 +43,33 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { mapState, mapActions } from 'vuex'
 
 export default defineComponent({
   data() {
     return {
       newMessage: "",
-      messages: [
-        {
-          text: 'Hi!Lizzy, How are you?',
-          from: 'me'
-        },
-        {
-          text: 'Good Thanks, Jimmy. How are you?',
-          from: 'them'
-        },
-        {
-          text: 'Pretty Good!',
-          from: 'me'
-        }
-      ]
+      // messages: [
+      //   {
+      //     text: 'Hi!Lizzy, How are you?',
+      //     from: 'me'
+      //   },
+      //   {
+      //     text: 'Good Thanks, Jimmy. How are you?',
+      //     from: 'them'
+      //   },
+      //   {
+      //     text: 'Pretty Good!',
+      //     from: 'me'
+      //   }
+      // ]
     }
   },
+  computed: {
+    ...mapState('moduleStore', ['messages'])
+  },
   methods: {
+    ...mapActions('moduleStore', ['firebaseGetMessages']),
     sendMessage() {
       this.messages.push({
         text: this.newMessage,
@@ -73,7 +78,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    console.log(this.$route.params.otherUserId);
+    this.firebaseGetMessages(this.$route.params.otherUserId)
   }
 })
 </script>

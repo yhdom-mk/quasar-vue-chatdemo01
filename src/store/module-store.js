@@ -3,7 +3,8 @@ import { firebaseAuth, firebaseDb } from "../boot/firebase"
 
 const state = {
   userDetails: {},
-  users: []
+  users: [],
+  messages: []
   
   // usersPayloads: {
   //   name: '',
@@ -18,7 +19,6 @@ const mutations = {
     state.userDetails = payload
   },
   addUser(state, payload) {
-    // console.log('payload', payload);
     // Vue.set(state.users, payload.userId, payload.userDetails)
     // state.users.userDetails = payload.userDetails
     // state.users = payload.userDetails
@@ -26,9 +26,11 @@ const mutations = {
 
     // state.users.push(...[payload.userDetails])
     // state.users.push(...[payload.userId])
-    state.users.push(...[payload])
     // state.users.push(...[JSON.parse(JSON.stringify(payload))])
+
+    state.users.push(...[payload])   //payload ===> userId, userDetails
     console.log(state.users);
+    // console.log('payload', payload);
   },
   updateUser(state, payload) {
     // Object.assign(state.users[userId],payload.userDetails)
@@ -58,6 +60,10 @@ const mutations = {
     // })
     // console.log(payloadIndex);
     // console.log(state.users);
+  },
+  addMessage(state, payload) {
+    state.messages.push(...[payload])   //payload ===> messageId, messageDetails
+    console.log(state.messages);
   }
 }
 
@@ -141,6 +147,7 @@ const actions = {
     firebaseDb.ref('users').on('child_added', snapshot => {
       let userDetails = snapshot.val()
       let userId = snapshot.key
+      // console.log(snapshot.key);
       // console.log(userDetails, userId);
       commit('addUser', {
         userDetails,
@@ -156,6 +163,24 @@ const actions = {
         userId
       })
     })
+  },
+  firebaseGetMessages({ commit, state }, otherUserId) {
+    console.log('otherUserId:', otherUserId);
+    let userId = state.userDetails.userId
+    console.log(userId);
+    firebaseDb.ref('chats/'+ userId +'/'+ otherUserId).on(
+      'child_added', snapshot => {
+        // console.log('snapshot:', snapshot)
+        let messageDetails = snapshot.val()
+        let messageId = snapshot.key
+        // console.log('messageId:', messageId);
+        // console.log('messageDetails:', messageDetails);
+        commit('addMessage', {
+          messageId,
+          messageDetails
+        })
+      }
+    )
   }
 }
 
