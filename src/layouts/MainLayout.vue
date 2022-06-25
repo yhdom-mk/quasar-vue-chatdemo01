@@ -56,7 +56,7 @@ export default defineComponent({
   computed: {
     ...mapState('moduleStore', ['userDetails']),
     title() {
-      return console.log(this.$route)
+      return console.log(this.$route.fullPath)
         let currentPath = this.$route.fullPath
         if(currentPath == '/') return 'QuasarChat'
         else if (currentPath == '/chat') return 'Chat'
