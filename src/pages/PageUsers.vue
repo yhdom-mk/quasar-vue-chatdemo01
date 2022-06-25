@@ -5,8 +5,8 @@
       separator>
       <q-item
         v-for="(user, key) in users"
-        :key="key"
-        :to="'/chat/'+ key"
+        :key= 'key'
+        :to="'/chat/'+ user.userId"
         clickable
         v-ripple>
         <q-item-section avatar>
@@ -29,7 +29,8 @@
     </q-list>
   </q-page>
 </template>
-<!-- v-for="user in users" :key="user" -->
+<!-- v-for="user in users" :key="user"         :key="key"
+-->
 
 <script>
 import { defineComponent } from 'vue'
