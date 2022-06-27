@@ -1,6 +1,8 @@
 // import Vue from 'vue'
 import { firebaseAuth, firebaseDb } from "../boot/firebase"
 
+let messagesRef
+
 const state = {
   userDetails: {},
   users: [],
@@ -64,6 +66,9 @@ const mutations = {
   addMessage(state, payload) {
     state.messages.push(...[payload])   //payload ===> messageId, messageDetails
     console.log(state.messages);
+  },
+  clearMessages(state) {
+    state.messages = []
   }
 }
 
@@ -168,8 +173,8 @@ const actions = {
     console.log('otherUserId:', otherUserId);
     let userId = state.userDetails.userId
     console.log(userId);
-    firebaseDb.ref('chats/'+ userId +'/'+ otherUserId).on(
-      'child_added', snapshot => {
+    messagesRef = firebaseDb.ref('chats/'+ userId +'/'+ otherUserId)
+    messagesRef.on('child_added', snapshot => {
         // console.log('snapshot:', snapshot)
         let messageDetails = snapshot.val()
         let messageId = snapshot.key
@@ -181,6 +186,13 @@ const actions = {
         })
       }
     )
+  },
+  firebaseStopGettingMessages({ commit}) {
+    if(messagesRef) {
+      messagesRef.off('child_added')
+      commit('clearMessages')
+      // console.log('firebaseStopGettingMessages');
+    }
   }
 }
 
