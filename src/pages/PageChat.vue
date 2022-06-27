@@ -1,13 +1,13 @@
 <template>
   <q-banner inline-actions class="bg-grey-4 text-center">
-    User is offline.
+    {{ otherUserDetails.name }} is offline.
   </q-banner>
   <q-page class="flex column">
     <div class="q-pa-md column col justify-end">
       <q-chat-message
         v-for="message in messages"
         :key="message.messageDetails.text"
-        :name="message.messageDetails.from"
+        :name="message.messageDetails.from == 'me'? userDetails.name : otherUserDetails"
         :text="[message.messageDetails.text]"
         :sent="message.messageDetails.from == 'me' ? true: false"
       />
@@ -66,10 +66,14 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState('moduleStore', ['messages'])
+    ...mapState('moduleStore', ['messages', 'userDetails']),
+    otherUserDetails() {
+      // return this.$store.state.moduleStore.users[this.$route.params.otherUserId]
+      return this.$store.state.moduleStore.users[this.$route.params.otherUserId]
+    }
   },
   methods: {
-    ...mapActions('moduleStore', ['firebaseGetMessages']),
+    ...mapActions('moduleStore', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
     sendMessage() {
       this.messages.push({
         text: this.newMessage,
@@ -79,6 +83,9 @@ export default defineComponent({
   },
   mounted() {
     this.firebaseGetMessages(this.$route.params.otherUserId)
+  },
+  unmounted() {
+    this.firebaseStopGettingMessages()
   }
 })
 </script>
