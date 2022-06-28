@@ -7,7 +7,7 @@
       <q-chat-message
         v-for="message in messages"
         :key="message.messageDetails.text"
-        :name="message.messageDetails.from == 'me'? userDetails.name : otherUserDetails"
+        :name="message.messageDetails.from == 'me'? userDetails.name : otherUserDetails.name"
         :text="[message.messageDetails.text]"
         :sent="message.messageDetails.from == 'me' ? true: false"
       />
@@ -66,10 +66,14 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState('moduleStore', ['messages', 'userDetails']),
+    ...mapState('moduleStore', ['messages', 'userDetails', 'users']),
     otherUserDetails() {
+      // console.log(this.$store.state.moduleStore.users);
+      let findUserId = this.$store.state.moduleStore.users.find(el =>
+        el.userId == this.$route.params.otherUserId)
+      console.log(findUserId.userDetails.name);
       // return this.$store.state.moduleStore.users[this.$route.params.otherUserId]
-      return this.$store.state.moduleStore.users[this.$route.params.otherUserId]
+      return findUserId.userDetails
     }
   },
   methods: {
