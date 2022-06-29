@@ -44,8 +44,10 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapState, mapActions } from 'vuex'
+import mixinOtherUserDetails from '../mixins/mixin-other-user-details'
 
 export default defineComponent({
+  mixins: [mixinOtherUserDetails],
   data() {
     return {
       newMessage: "",
@@ -66,16 +68,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapState('moduleStore', ['messages', 'userDetails', 'users']),
-    otherUserDetails() {
-      // console.log(this.$store.state.moduleStore.users);
-      // let findUserId = this.$store.state.moduleStore.users.find(el =>
-      let findUserId = this.users.find(el =>
-        el.userId == this.$route.params.otherUserId)
-      console.log(findUserId.userDetails.name);
-      // return this.$store.state.moduleStore.users[this.$route.params.otherUserId]
-      return findUserId.userDetails
-    }
+    ...mapState('moduleStore', ['messages', 'userDetails', 'users'])
   },
   methods: {
     ...mapActions('moduleStore', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
