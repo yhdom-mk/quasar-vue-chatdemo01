@@ -1,5 +1,7 @@
 <template>
-  <q-banner inline-actions class="bg-grey-4 text-center">
+  <q-banner
+    v-if="!otherUserDetails.online"
+    inline-actions class="bg-grey-4 text-center">
     {{ otherUserDetails.name }} is offline.
   </q-banner>
   <q-page class="flex column">
@@ -71,12 +73,22 @@ export default defineComponent({
     ...mapState('moduleStore', ['messages', 'userDetails', 'users'])
   },
   methods: {
-    ...mapActions('moduleStore', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
+    ...mapActions('moduleStore',[
+      'firebaseGetMessages',
+      'firebaseStopGettingMessages',
+      'firebaseSendMessage'
+    ]),
     sendMessage() {
-      this.messages.push({
-        text: this.newMessage,
-        from: 'me'
+      this.firebaseSendMessage({
+        message: {
+          text: this.newMessage,
+          from: 'me'
+        },
+        otherUserId: this.$route.params.otherUserId
       })
+      console.log(this.newMessage);
+      // this.messages.push({
+      // })
     }
   },
   mounted() {

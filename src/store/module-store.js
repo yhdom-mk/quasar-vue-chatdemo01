@@ -175,24 +175,26 @@ const actions = {
     console.log(userId);
     messagesRef = firebaseDb.ref('chats/'+ userId +'/'+ otherUserId)
     messagesRef.on('child_added', snapshot => {
-        // console.log('snapshot:', snapshot)
-        let messageDetails = snapshot.val()
-        let messageId = snapshot.key
-        // console.log('messageId:', messageId);
-        // console.log('messageDetails:', messageDetails);
-        commit('addMessage', {
-          messageId,
-          messageDetails
-        })
-      }
-    )
+      // console.log('snapshot:', snapshot)
+      let messageDetails = snapshot.val()
+      let messageId = snapshot.key
+      // console.log('messageId:', messageId);
+      // console.log('messageDetails:', messageDetails);
+      commit('addMessage', {
+        messageId,
+        messageDetails
+      })
+    })
   },
-  firebaseStopGettingMessages({ commit}) {
+  firebaseStopGettingMessages({ commit }) {
     if(messagesRef) {
       messagesRef.off('child_added')
       commit('clearMessages')
       // console.log('firebaseStopGettingMessages');
     }
+  },
+  firebaseSendMessage({}, payload) {
+    console.log('payload', payload);
   }
 }
 
@@ -201,14 +203,14 @@ const getters = {
     let usersFiltered = {}
     usersFiltered = state.users.filter((id) =>
       id.userId !== state.userDetails.userId)
+    console.log(usersFiltered);
+    return usersFiltered
     // Object.keys(state.users).forEach(key => {
     //   if(key !== state.users.userId) {
     //     usersFiltered[key] = state.users[key]
     //   }
     // });
     // console.log(Object.keys(state.users));
-    console.log(usersFiltered);
-    return usersFiltered
   }
 }
 
