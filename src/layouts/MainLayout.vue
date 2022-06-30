@@ -13,7 +13,7 @@
 
         <q-toolbar-title class="absolute-center">
           <div class="omit">
-            {{ this.$route.path }}
+            {{ title }}
           </div>
         </q-toolbar-title>
 
@@ -42,26 +42,27 @@
 
     <q-page-container>
       <router-view />
-      {{ title }}
     </q-page-container>
-
   </q-layout>
 </template>
+<!-- {{ title this.$route.path}} -->
 
 <script>
 import { defineComponent } from 'vue'
 import { mapState, mapActions } from 'vuex'
+import mixinOtherUserDetails from '../mixins/mixin-other-user-details'
 
 export default defineComponent({
+  mixins: [mixinOtherUserDetails],
   computed: {
-    ...mapState('moduleStore', ['userDetails']),
+    ...mapState('moduleStore', ['userDetails', 'users']),
     title() {
-      return console.log(this.$route.fullPath)
       let currentPath = this.$route.fullPath
-      if(currentPath == '/') return 'QuasarChat'
-      else if (currentPath == '/chat') return 'Chat'
-      else if (currentPath == '/auth') return 'Login'
       console.log(currentPath)
+      if(currentPath == '/') return 'QuasarChat'
+      else if (currentPath.includes('/chat')) return this.otherUserDetails.name
+      else if (currentPath == '/auth') return 'Login'
+      return console.log(this.$route.fullPath)
     }
   },
   methods: {
