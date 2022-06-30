@@ -1,7 +1,7 @@
 // app global css in SCSS form
 
 .omit {
-  width: 180px; /* この幅を超えると省略 */
+  width: 100px; /* この幅を超えると省略 */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
