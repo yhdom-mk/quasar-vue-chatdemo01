@@ -147,6 +147,7 @@ const actions = {
   firebaseUpdateUser({}, payload) {
     firebaseDb.ref('users/' + payload.userId)
       .update(payload.updates)
+    console.log('updateUserPayload', payload);
   },
   firebaseGetUsers({ commit }) {
     firebaseDb.ref('users').on('child_added', snapshot => {
@@ -194,7 +195,13 @@ const actions = {
     }
   },
   firebaseSendMessage({}, payload) {
-    console.log('payload', payload);
+    console.log('sendMessagePayload', payload);
+    firebaseDb.ref('chats/'+ state.userDetails.userId
+     +'/'+ payload.otherUserId).push(payload.message)
+
+    payload.message.from = 'them'
+    firebaseDb.ref('chats/'+ payload.otherUserId
+     +'/'+ state.userDetails.userId).push(payload.message)
   }
 }
 
