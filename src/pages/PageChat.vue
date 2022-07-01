@@ -86,10 +86,13 @@ export default defineComponent({
         },
         otherUserId: this.$route.params.otherUserId
       })
-      console.log(this.newMessage);
+      // console.log(this.newMessage);
       // this.messages.push({
       // })
-    }
+    },
+    // comfirmedMessage(){
+    //   console.log('Send Messages');
+    // }
   },
   mounted() {
     this.firebaseGetMessages(this.$route.params.otherUserId)
