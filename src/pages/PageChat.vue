@@ -88,15 +88,15 @@ export default defineComponent({
       // console.log(this.newMessage);
       // this.messages.push({
       // })
-    },
-    watch: {
-      messages: function(val) {
-        console.log('val:', val);
-      }
     }
     // comfirmedMessage(){    /* コンソール確認用*/
     //   console.log('Send Messages');
     // }
+  },
+  watch: {
+    messages: function(val) {
+      console.log('val:', val);
+    }
   },
   mounted() {
     this.firebaseGetMessages(this.$route.params.otherUserId)
