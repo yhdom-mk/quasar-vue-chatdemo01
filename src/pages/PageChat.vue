@@ -7,8 +7,8 @@
   <q-page class="flex column">
     <div class="q-pa-md column col justify-end">
       <q-chat-message
-        v-for="message in messages"
-        :key="message.messageDetails.text"
+        v-for="(message, key) in messages"
+        :key="key"
         :name="message.messageDetails.from == 'me'? userDetails.name : otherUserDetails.name"
         :text="[message.messageDetails.text]"
         :sent="message.messageDetails.from == 'me' ? true: false"
@@ -27,7 +27,6 @@
             rounded
             label="Message"
             dense>
-
             <template v-slot:after>
               <q-btn
                 round
@@ -90,7 +89,12 @@ export default defineComponent({
       // this.messages.push({
       // })
     },
-    // comfirmedMessage(){
+    watch: {
+      messages: function(val) {
+        console.log('val:', val);
+      }
+    }
+    // comfirmedMessage(){    /* コンソール確認用*/
     //   console.log('Send Messages');
     // }
   },
