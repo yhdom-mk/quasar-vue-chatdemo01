@@ -93,9 +93,15 @@ export default defineComponent({
     //   console.log('Send Messages');
     // }
   },
+  // watch() {
+  //   console.log(this.messages);
+  // },
   watch: {
-    messages: function(val) {
-      console.log('val:', val);
+    messages: {
+      handler: function(val) {
+        console.log('val:', this.messages);
+      },
+      deep: true
     }
   },
   mounted() {
