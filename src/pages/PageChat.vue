@@ -1,11 +1,15 @@
 <template>
-  <q-banner
-    v-if="!otherUserDetails.online"
-    inline-actions class="bg-grey-4 text-center">
-    {{ otherUserDetails.name }} is offline.
-  </q-banner>
-  <q-page class="flex column">
-    <div class="q-pa-md column col justify-end">
+  <q-page
+    ref="pageChat"
+    class="page-chat flex column">
+    <q-banner
+      v-if="!otherUserDetails.online"
+      inline-actions class="bg-grey-4 text-center">
+      {{ otherUserDetails.name }} is offline.
+    </q-banner>
+    <div
+      :class="{ 'invisible': !showMessages }"
+      class="q-pa-md column col justify-end">
       <q-chat-message
         v-for="(message, key) in messages"
         :key="key"
@@ -21,6 +25,7 @@
           class="full-width">
           <q-input
             v-model="newMessage"
+            ref="newMessage"
             bg-color="blue-grey-1"
             class="full-width"
             outlined
@@ -52,6 +57,7 @@ export default defineComponent({
   data() {
     return {
       newMessage: "",
+      showMessages: false
       // messages: [
       //   {
       //     text: 'Hi!Lizzy, How are you?',
@@ -85,9 +91,20 @@ export default defineComponent({
         },
         otherUserId: this.$route.params.otherUserId
       })
+      this.clearMessage()
       // console.log(this.newMessage);
       // this.messages.push({
       // })
+    },
+    clearMessage() {
+      this.newMessage = ''
+      this.$refs.newMessage.focus()
+    },
+    scrollToBottom() {
+      let pageChat = this.$refs.pageChat.$el
+      setTimeout(() => {
+        window.scrollTo(0, pageChat.scrollHeight)
+      }, 20);
     }
     // comfirmedMessage(){    /* コンソール確認用*/
     //   console.log('Send Messages');
@@ -99,7 +116,13 @@ export default defineComponent({
   watch: {
     messages: {
       handler: function(val) {
-        console.log('val:', this.messages);
+        // console.log('val:', val);
+        if(Object.keys(val).length) {
+          this.scrollToBottom()
+          setTimeout(() => {
+            this.showMessages = true
+          }, 200)
+        }
       },
       deep: true
     }
