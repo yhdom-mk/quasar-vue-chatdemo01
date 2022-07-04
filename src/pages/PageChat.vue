@@ -4,7 +4,7 @@
     class="page-chat flex column">
     <q-banner
       v-if="!otherUserDetails.online"
-      inline-actions class="bg-grey-4 text-center">
+      inline-actions class="bg-grey-4 text-center fixed-top">
       {{ otherUserDetails.name }} is offline.
     </q-banner>
     <div
@@ -16,6 +16,7 @@
         :name="message.messageDetails.from == 'me'? userDetails.name : otherUserDetails.name"
         :text="[message.messageDetails.text]"
         :sent="message.messageDetails.from == 'me' ? true: false"
+        :bg-color="message.messageDetails.from == 'me' ? 'white' : 'light-green-2'"
       />
     </div>
     <q-footer elevated>
@@ -135,3 +136,14 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="stylus">
+  .page-chat
+    background: lightblue
+  .q-banner
+    top 50px
+    z-index 2
+    opacity: 0.7
+  .q-chat-message
+    z-index 1
+</style>
