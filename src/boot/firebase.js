@@ -16,7 +16,14 @@ import "firebase/compat/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  fireConfig
+  // fireConfig
+  apiKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  authDomain: "quasarchatapp-demo01.firebaseapp.com",
+  databaseURL: "https://XXXXXXXXXXXXXXXXXXXXXXX.firebaseio.com",
+  projectId: "quasarchatapp-demo01",
+  storageBucket: "quasarchatapp-demo01.appspot.com",
+  messagingSenderId: "XXXXXXXXXXXXXX",
+  appId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 };
 
 // Initialize Firebase
